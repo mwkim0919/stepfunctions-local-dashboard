@@ -1,24 +1,78 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import CreateActivity from "./components/CreateActivity";
+import CreateStateMachine from "./components/CreateStateMachine";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <ul className="nav nav-tabs" id="myTab" role="tablist">
+        <li className="nav-item">
+          <a
+            className="nav-link active"
+            id="createActivity-tab"
+            data-toggle="tab"
+            href="#createActivity"
+            role="tab"
+            aria-controls="createActivity"
+            aria-selected="true"
+          >
+            CreateActivity
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            id="profile-tab"
+            data-toggle="tab"
+            href="#profile"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+          >
+            CreateStateMachine
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            id="contact-tab"
+            data-toggle="tab"
+            href="#contact"
+            role="tab"
+            aria-controls="contact"
+            aria-selected="false"
+          >
+            StartExecution
+          </a>
+        </li>
+      </ul>
+      <div className="tab-content" id="myTabContent">
+        <div
+          className="tab-pane fade show active"
+          id="createActivity"
+          role="tabpanel"
+          aria-labelledby="createActivity-tab"
         >
-          Learn React
-        </a>
-      </header>
+          <CreateActivity />
+        </div>
+        <div
+          className="tab-pane fade"
+          id="profile"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          <CreateStateMachine />
+        </div>
+        <div
+          className="tab-pane fade"
+          id="contact"
+          role="tabpanel"
+          aria-labelledby="contact-tab"
+        >
+          ...
+        </div>
+      </div>
     </div>
   );
 }
