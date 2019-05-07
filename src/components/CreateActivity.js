@@ -7,7 +7,7 @@ class CreateActivity extends Component {
     this.state = {
       name: "",
       endpoint: "",
-      result: ""
+      response: ""
     };
   }
 
@@ -25,12 +25,9 @@ class CreateActivity extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    let message = `aws stepfunctions create-activity --endpoint '${
-      this.state.endpoint
-    }' --name '${this.state.name}'`;
     const data = {
-      "name": this.state.name,
-      "endpoint": this.state.endpoint
+      name: this.state.name,
+      endpoint: this.state.endpoint
     };
     fetch("/create-activity", {
       method: "POST",
@@ -38,11 +35,19 @@ class CreateActivity extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
-    }).then(response => response.json())
-    .catch(err => console.log(err));
+    })
+      .then(res =>
+        res
+          .json()
+          .then(data =>
+            this.setState({ response: JSON.stringify(data, null, 4) })
+          )
+      )
+      .catch(err => console.log(err));
   };
 
   render() {
+    const response = this.state.response;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -70,6 +75,9 @@ class CreateActivity extends Component {
           </div>
           <input type="submit" value="Submit" />
         </form>
+        <div className="response">
+          <pre>{response}</pre>
+        </div>
       </div>
     );
   }
