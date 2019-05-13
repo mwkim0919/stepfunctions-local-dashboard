@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import * as StepFunctions from "aws-sdk/clients/stepfunctions";
 
 class CreateActivity extends Component {
   constructor() {
@@ -26,7 +25,9 @@ class CreateActivity extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const data = {
-      name: this.state.name,
+      param: {
+        name: this.state.name,
+      },
       endpoint: this.state.endpoint
     };
     fetch("/create-activity", {

@@ -1,20 +1,18 @@
 const express = require("express");
 const AWS = require("aws-sdk");
+const StepFunctionsAPI = require("./backend/StepFunctionsAPI");
+const APIType = require("./util/APIType");
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
 app.post("/create-activity", function(req, res) {
-  const stepfunctions = new AWS.StepFunctions({
-    region: "us-east-1",
-    endpoint: req.body.endpoint
-  });
-  stepfunctions
-    .createActivity({ name: req.body.name })
-    .promise()
-    .then(data => res.send(data))
-    .catch(err => console.log(err, err.stack));
+  StepFunctionsAPI.call(APIType.CREATE_ACTIVITY, req, res);
+});
+
+app.post("/create-state-machine", function(req, res) {
+  StepFunctionsAPI.call(APIType.CREATE_STATE_MACHINE, req, res);
 });
 
 app.use(express.static("build"));

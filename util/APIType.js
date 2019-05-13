@@ -1,0 +1,25 @@
+const API = {
+    CREATE_ACTIVITY: "createActivity",
+    CREATE_STATE_MACHINE: "createStateMachine",
+    DELETE_ACTIVITY: "deleteActivity",
+    DELETE_STATE_MACHINE: "deleteStateMachine",
+    DESCRIBE_ACTIVITY: "describeActivity",
+    DESCRIBE_EXECUTION: "describeExecution",
+    DESCRIBE_STATE_MACHINE: "describeStateMachine",
+    GET_ACTIVITY_TASK: "getActivityTask",
+    GET_EXECUTION_HISTORY: "getExecutionHistory",
+    LIST_ACTIVITIES: "listActivities",
+    LIST_EXECUTIONS: "listExecutions",
+    LIST_STATE_MACHINES: "listStateMachines",
+    LIST_TAGS_FOR_RESOURCE: "listTagsForResource",
+    SEND_TASK_FAILURE: "sendTaskFailure",
+    SEND_TASK_HEARTBEAT: "sendTaskHeartbeat",
+    SEND_TASK_SUCCESS: "sendTaskSuccess",
+    START_EXECUTION: "startExecution",
+    STOP_EXECUTION: "stopExecution",
+    TAG_RESOURCE: "tagResource",
+    UNTAG_RESOURCE: "untagResource",
+    UPDATE_STATE_MACHINE: "updateState",
+}
+
+module.exports = API;

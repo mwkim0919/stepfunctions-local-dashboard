@@ -4,9 +4,11 @@ class CreateStateMachine extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
       endpoint: "",
-      definition: ""
+      name: "",
+      definition: "",
+      roleArn: "",
+      response: ""
     };
   }
 
@@ -19,22 +21,46 @@ class CreateStateMachine extends Component {
       this.setState({
         endpoint: event.target.value
       });
-    } else if (event.target.name == "definition") {
+    } else if (event.target.name === "definition") {
       this.setState({
         definition: event.target.value
+      });
+    } else if (event.target.name === "roleArn") {
+      this.setState({
+        roleArn: event.target.value
       });
     }
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    let message = `aws stepfunctions create-activity --endpoint '${
-      this.state.endpoint
-    }' --name '${this.state.name}' --defintion '${this.state.definition}'`;
-    alert(message);
+    const data = {
+      param: {
+        name: this.state.name,
+        definition: this.state.definition,
+        roleArn: this.state.roleArn
+      },
+      endpoint: this.state.endpoint
+    };
+    fetch("/create-state-machine", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res =>
+        res
+          .json()
+          .then(data =>
+            this.setState({ response: JSON.stringify(data, null, 4) })
+          )
+      )
+      .catch(err => console.log(err));
   };
 
   render() {
+    const response = this.state.response;
     return (
       <div>
         <div className="result">{this.state.result}</div>
@@ -72,8 +98,22 @@ class CreateStateMachine extends Component {
               value={this.state.definition}
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="roleArn">Role Arn</label>
+            <input
+              type="text"
+              className="form-control"
+              id="roleArn"
+              name="roleArn"
+              value={this.state.roleArn}
+              onChange={this.handleChange}
+            />
+          </div>
           <input type="submit" value="Submit" />
         </form>
+        <div className="response">
+          <pre>{response}</pre>
+        </div>
       </div>
     );
   }
