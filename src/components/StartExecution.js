@@ -31,7 +31,11 @@ class StartExecution extends Component {
         res.json().then(data => {
           const stateMachines = data.stateMachines;
           this.setState({ stateMachines: stateMachines });
-          this.setState({ stateMachineArn: stateMachines[0].stateMachineArn });
+          if (stateMachines.length > 0) {
+            this.setState({
+              stateMachineArn: stateMachines[0].stateMachineArn
+            });
+          }
         })
       )
       .catch(err => console.log(err));
@@ -146,9 +150,22 @@ class StartExecution extends Component {
             Submit
           </button>
         </form>
-        <div className="response">
-          <pre>{response}</pre>
-        </div>
+        {response.length > 0 && (
+          <div
+            className="alert alert-primary alert-dismissible fade show response"
+            role="alert"
+          >
+            <pre>{response}</pre>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        )}
       </div>
     );
   }

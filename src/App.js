@@ -3,10 +3,15 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import CreateActivity from "./components/CreateActivity";
 import CreateStateMachine from "./components/CreateStateMachine";
+import getActivityTask from "./components/GetActivityTask";
 import ListActivities from "./components/ListActivities";
 import ListExecutions from "./components/ListExecutions";
 import ListStateMachines from "./components/ListStateMachines";
 import StartExecution from "./components/StartExecution";
+import SendTaskSuccess from "./components/SendTaskSuccess";
+import SendTaskFailure from "./components/SendTaskFailure";
+import SendTaskHeartbeat from "./components/SendTaskHeartbeat";
+import GetActivityTask from "./components/GetActivityTask";
 
 const APIs = [
   "createActivity",
@@ -16,15 +21,15 @@ const APIs = [
   // "describeActivity",
   // "describeExecution",
   // "describeStateMachine",
-  // "getActivityTask",
+  "getActivityTask",
   // "getExecutionHistory",
   "listActivities",
   "listExecutions",
   "listStateMachines",
   // "listTagsForResource",
-  // "sendTaskFailure",
-  // "sendTaskHeartbeat",
-  // "sendTaskSuccess",
+  "sendTaskFailure",
+  "sendTaskHeartbeat",
+  "sendTaskSuccess",
   "startExecution"
   // "stopExecution",
   // "tagResource",
@@ -66,10 +71,14 @@ function App() {
 
         <Route path="/createActivity" component={CreateActivity} />
         <Route path="/createStateMachine" component={CreateStateMachine} />
+        <Route path="/getActivityTask" component={GetActivityTask} />
         <Route path="/listActivities" component={ListActivities} />
         <Route path="/listExecutions" component={ListExecutions} />
         <Route path="/listStateMachines" component={ListStateMachines} />
         <Route path="/startExecution" component={StartExecution} />
+        <Route path="/sendTaskSuccess" component={SendTaskSuccess} />
+        <Route path="/sendTaskFailure" component={SendTaskFailure} />
+        <Route path="/sendTaskHeartbeat" component={SendTaskHeartbeat} />
       </Router>
     </div>
   );

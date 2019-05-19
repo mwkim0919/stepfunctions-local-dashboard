@@ -36,7 +36,7 @@ class ListStateMachines extends Component {
     return (
       <div>
         <table className="table">
-          <thead className="thead-dark">
+          <thead className="thead-light">
             <tr>
               <th scope="col">Name</th>
               <th scope="col">State Machine ARN</th>

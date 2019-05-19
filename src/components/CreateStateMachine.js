@@ -111,9 +111,22 @@ class CreateStateMachine extends Component {
           </div>
           <button type="submit" className="btn btn-primary btn-lg btn-block">Submit</button>
         </form>
-        <div className="response">
-          <pre>{response}</pre>
-        </div>
+        {response.length > 0 && (
+          <div
+            className="alert alert-primary alert-dismissible fade show response"
+            role="alert"
+          >
+            <pre>{response}</pre>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        )}
       </div>
     );
   }

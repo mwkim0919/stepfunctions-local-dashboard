@@ -15,6 +15,10 @@ app.post("/api/create-state-machine", function(req, res) {
   StepFunctionsAPI.call(APIType.CREATE_STATE_MACHINE, req, res);
 });
 
+app.post("/api/get-activity-task", function(req, res) {
+  StepFunctionsAPI.call(APIType.GET_ACTIVITY_TASK, req, res);
+});
+
 app.post("/api/list-activities", function(req, res) {
   StepFunctionsAPI.call(APIType.LIST_ACTIVITIES, req, res);
 });
@@ -29,6 +33,18 @@ app.post("/api/list-state-machines", function(req, res) {
 
 app.post("/api/start-execution", function(req, res) {
   StepFunctionsAPI.call(APIType.START_EXECUTION, req, res);
+});
+
+app.post("/api/send-task-success", function(req, res) {
+  StepFunctionsAPI.call(APIType.SEND_TASK_SUCCESS, req, res);
+});
+
+app.post("/api/send-task-failure", function(req, res) {
+  StepFunctionsAPI.call(APIType.SEND_TASK_FAILURE, req, res);
+});
+
+app.post("/api/send-task-heartbeat", function(req, res) {
+  StepFunctionsAPI.call(APIType.SEND_TASK_HEARTBEAT, req, res);
 });
 
 app.use(express.static("build"));

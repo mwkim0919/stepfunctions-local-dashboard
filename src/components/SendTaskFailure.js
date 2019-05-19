@@ -1,23 +1,29 @@
 import React, { Component } from "react";
 
-class CreateActivity extends Component {
+class SendTaskFailure extends Component {
   constructor() {
     super();
     this.state = {
       endpoint: "http://localhost:8083",
-      name: "",
+      taskToken: "",
+      cause: "",
+      error: "",
       response: ""
     };
   }
 
   handleChange = event => {
-    if (event.target.name === "name") {
+    if (event.target.name === "taskToken") {
       this.setState({
-        name: event.target.value
+        taskToken: event.target.value
       });
-    } else if (event.target.name === "endpoint") {
+    } else if (event.target.name === "cause") {
       this.setState({
-        endpoint: event.target.value
+        cause: event.target.value
+      });
+    } else if (event.target.name === "error") {
+      this.setState({
+        error: event.target.value
       });
     }
   };
@@ -26,11 +32,13 @@ class CreateActivity extends Component {
     event.preventDefault();
     const data = {
       param: {
-        name: this.state.name
+        taskToken: this.state.taskToken,
+        cause: this.state.cause,
+        error: this.state.error
       },
       endpoint: this.state.endpoint
     };
-    fetch("/api/create-activity", {
+    fetch("/api/send-task-failure", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -53,24 +61,35 @@ class CreateActivity extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="endpoint">Endpoint</label>
+            <label htmlFor="taskToken">Task Token</label>
             <input
               type="text"
               className="form-control"
-              id="endpoint"
-              name="endpoint"
-              value={this.state.endpoint}
+              id="taskToken"
+              name="taskToken"
+              value={this.state.taskToken}
               onChange={this.handleChange}
             />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="cause">Cause</label>
             <input
               type="text"
               className="form-control"
-              id="name"
-              name="name"
-              value={this.state.name}
+              id="cause"
+              name="cause"
+              value={this.state.cause}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="error">Error</label>
+            <input
+              type="text"
+              className="form-control"
+              id="error"
+              name="error"
+              value={this.state.error}
               onChange={this.handleChange}
             />
           </div>
@@ -99,4 +118,4 @@ class CreateActivity extends Component {
   }
 }
 
-export default CreateActivity;
+export default SendTaskFailure;

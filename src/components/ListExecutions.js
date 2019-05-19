@@ -6,8 +6,36 @@ class ListExecutions extends Component {
     this.state = {
       endpoint: "http://localhost:8083",
       stateMachineArn: "",
+      stateMachines: [],
       executions: []
     };
+  }
+
+  componentDidMount() {
+    const data = {
+      param: {},
+      endpoint: this.state.endpoint
+    };
+
+    fetch("/api/list-state-machines", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res =>
+        res.json().then(data => {
+          const stateMachines = data.stateMachines;
+          this.setState({ stateMachines: stateMachines });
+          if (stateMachines.length > 0) {
+            this.setState({
+              stateMachineArn: stateMachines[0].stateMachineArn
+            });
+          }
+        })
+      )
+      .catch(err => console.log(err));
   }
 
   handleChange = event => {
@@ -48,29 +76,40 @@ class ListExecutions extends Component {
     } else {
       return "table-danger";
     }
-  }
+  };
 
   render() {
     const executions = this.state.executions;
+    const stateMachines = this.state.stateMachines;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="stateMachineArn">State Machine ARN</label>
-            <input
-              type="text"
+            <select
               className="form-control"
-              id="stateMachineArn"
               name="stateMachineArn"
-              value={this.state.stateMachineArn}
+              id="stateMachineArn"
               onChange={this.handleChange}
-            />
+              value={this.state.stateMachineArn}
+              required
+            >
+              {stateMachines.map(stateMachine => {
+                return (
+                  <option value={stateMachine.stateMachineArn}>
+                    {stateMachine.stateMachineArn}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <button type="submit" className="btn btn-primary btn-lg btn-block">Submit</button>
+          <button type="submit" className="btn btn-primary btn-lg btn-block">
+            Submit
+          </button>
         </form>
 
         <table className="table">
-          <thead className="thead-dark">
+          <thead className="thead-light">
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Execution ARN</th>

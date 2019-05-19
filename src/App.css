@@ -1,10 +1,10 @@
 body {
-  margin: 50px 20px 20px 20px
+  margin: 60px 20px 20px 20px
 }
 
 div.response {
   margin-top: 20px;
-  background-color: darkgrey;
+  /* background-color: darkgrey; */
   padding: 15px 15px;
 }
 
