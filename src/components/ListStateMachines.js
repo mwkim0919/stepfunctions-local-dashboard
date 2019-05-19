@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 
-class ListActivities extends Component {
+class ListStateMachines extends Component {
   constructor() {
     super();
     this.state = {
       endpoint: "http://localhost:8083",
-      activities: []
+      stateMachineArn: "",
+      input: "",
+      name: "",
+      stateMachines: []
     };
   }
 
@@ -15,7 +18,7 @@ class ListActivities extends Component {
       endpoint: this.state.endpoint
     };
 
-    fetch("/api/list-activities", {
+    fetch("/api/list-state-machines", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -23,32 +26,30 @@ class ListActivities extends Component {
       body: JSON.stringify(data)
     })
       .then(res =>
-        res.json().then(data =>
-          this.setState({ activities: data.activities })
-        )
+        res.json().then(data => this.setState({ stateMachines: data.stateMachines }))
       )
       .catch(err => console.log(err));
   }
 
   render() {
-    const activities = this.state.activities;
+    const stateMachines = this.state.stateMachines;
     return (
       <div>
         <table className="table">
           <thead className="thead-dark">
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">Activity ARN</th>
+              <th scope="col">State Machine ARN</th>
               <th scope="col">Creation Date</th>
             </tr>
           </thead>
           <tbody>
-            {activities.map(activity => {
+            {stateMachines.map(stateMachine => {
               return (
                 <tr>
-                  <td>{activity.name}</td>
-                  <td>{activity.activityArn}</td>
-                  <td>{activity.creationDate}</td>
+                  <td>{stateMachine.name}</td>
+                  <td>{stateMachine.stateMachineArn}</td>
+                  <td>{stateMachine.creationDate}</td>
                 </tr>
               );
             })}
@@ -59,4 +60,4 @@ class ListActivities extends Component {
   }
 }
 
-export default ListActivities;
+export default ListStateMachines;

@@ -4,8 +4,8 @@ class CreateActivity extends Component {
   constructor() {
     super();
     this.state = {
+      endpoint: "http://localhost:8083",
       name: "",
-      endpoint: "",
       response: ""
     };
   }
@@ -26,11 +26,11 @@ class CreateActivity extends Component {
     event.preventDefault();
     const data = {
       param: {
-        name: this.state.name,
+        name: this.state.name
       },
       endpoint: this.state.endpoint
     };
-    fetch("/create-activity", {
+    fetch("/api/create-activity", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -74,7 +74,9 @@ class CreateActivity extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <input type="submit" value="Submit" />
+          <button type="submit" className="btn btn-primary btn-lg btn-block">
+            Submit
+          </button>
         </form>
         <div className="response">
           <pre>{response}</pre>
