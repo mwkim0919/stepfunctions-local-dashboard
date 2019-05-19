@@ -2,50 +2,53 @@ import React from "react";
 import "./App.css";
 import CreateActivity from "./components/CreateActivity";
 import CreateStateMachine from "./components/CreateStateMachine";
+import ListActivities from "./components/ListActivities";
+
+const APIs = [
+  "createActivity",
+  "createStateMachine",
+  "deleteActivity",
+  "deleteStateMachine",
+  "describeActivity",
+  "describeExecution",
+  "describeStateMachine",
+  "getActivityTask",
+  "getExecutionHistory",
+  "listActivities",
+  "listExecutions",
+  "listStateMachines",
+  "listTagsForResource",
+  "sendTaskFailure",
+  "sendTaskHeartbeat",
+  "sendTaskSuccess",
+  "startExecution",
+  "stopExecution",
+  "tagResource",
+  "untagResource",
+  "updateState"
+];
 
 function App() {
   return (
     <div className="App">
       <ul className="nav nav-tabs" id="myTab" role="tablist">
-        <li className="nav-item">
-          <a
-            className="nav-link active"
-            id="createActivity-tab"
-            data-toggle="tab"
-            href="#createActivity"
-            role="tab"
-            aria-controls="createActivity"
-            aria-selected="true"
-          >
-            CreateActivity
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            id="profile-tab"
-            data-toggle="tab"
-            href="#profile"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="false"
-          >
-            CreateStateMachine
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            id="contact-tab"
-            data-toggle="tab"
-            href="#contact"
-            role="tab"
-            aria-controls="contact"
-            aria-selected="false"
-          >
-            StartExecution
-          </a>
-        </li>
+        {APIs.map((api, index) => {
+          return (
+            <li className="nav-item">
+              <a
+                className={index === 0 ? "nav-link active" : "nav-link"}
+                id={api + "-tab"}
+                data-toggle="tab"
+                href={"#" + api}
+                role="tab"
+                aria-controls={api}
+                aria-selected="true"
+              >
+                {api}
+              </a>
+            </li>
+          );
+        })}
       </ul>
       <div className="tab-content" id="myTabContent">
         <div
@@ -58,19 +61,19 @@ function App() {
         </div>
         <div
           className="tab-pane fade"
-          id="profile"
+          id="createStateMachine"
           role="tabpanel"
-          aria-labelledby="profile-tab"
+          aria-labelledby="createStateMachine-tab"
         >
           <CreateStateMachine />
         </div>
         <div
           className="tab-pane fade"
-          id="contact"
+          id="listActivities"
           role="tabpanel"
-          aria-labelledby="contact-tab"
+          aria-labelledby="listActivities-tab"
         >
-          ...
+          <ListActivities />
         </div>
       </div>
     </div>

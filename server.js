@@ -15,5 +15,9 @@ app.post("/create-state-machine", function(req, res) {
   StepFunctionsAPI.call(APIType.CREATE_STATE_MACHINE, req, res);
 });
 
+app.post("/list-activities", function(req, res) {
+  StepFunctionsAPI.call(APIType.LIST_ACTIVITIES, req, res);
+})
+
 app.use(express.static("build"));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
