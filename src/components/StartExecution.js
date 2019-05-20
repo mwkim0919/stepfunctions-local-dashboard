@@ -10,7 +10,8 @@ class StartExecution extends Component {
       stateMachineArn: "",
       stateMachines: [],
       input: "",
-      response: ""
+      response: "",
+      statusCode: ""
     };
   }
 
@@ -79,18 +80,22 @@ class StartExecution extends Component {
       body: JSON.stringify(data)
     })
       .then(res =>
-        res
-          .json()
-          .then(data =>
-            this.setState({ response: JSON.stringify(data, null, 4) })
-          )
+        res.json().then(data => {
+          if ("statusCode" in data) {
+            this.setState({ statusCode: data.statusCode });
+          } else {
+            this.setState({ statusCode: "200" });
+          }
+          this.setState({ response: JSON.stringify(data, null, 4) });
+        })
       )
-      .catch(err => console.log(err));
+      .catch(err => this.setState({ response: JSON.stringify(err, null, 4) }));
   };
 
   render() {
     const stateMachines = this.state.stateMachines;
     const response = this.state.response;
+    const statusCode = this.state.statusCode;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -152,18 +157,14 @@ class StartExecution extends Component {
         </form>
         {response.length > 0 && (
           <div
-            className="alert alert-primary alert-dismissible fade show response"
+            className={
+              statusCode === "200"
+                ? "alert alert-success response"
+                : "alert alert-danger response"
+            }
             role="alert"
           >
             <pre>{response}</pre>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
         )}
       </div>

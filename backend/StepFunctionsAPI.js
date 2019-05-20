@@ -8,7 +8,7 @@ function call(type, req, res) {
       stepfunctions[type](req.body.param)
         .promise()
         .then(data => res.send(data))
-        .catch(err => res.send(err));
+        .catch(err => res.status(err.statusCode).send(err));
 }
 
 module.exports = {

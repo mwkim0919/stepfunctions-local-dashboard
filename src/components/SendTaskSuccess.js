@@ -7,7 +7,8 @@ class SendTaskSuccess extends Component {
       endpoint: "http://localhost:8083",
       taskToken: "",
       output: "",
-      response: ""
+      response: "",
+      statusCode: ""
     };
   }
 
@@ -40,17 +41,21 @@ class SendTaskSuccess extends Component {
       body: JSON.stringify(data)
     })
       .then(res =>
-        res
-          .json()
-          .then(data =>
-            this.setState({ response: JSON.stringify(data, null, 4) })
-          )
+        res.json().then(data => {
+          if ("statusCode" in data) {
+            this.setState({ statusCode: data.statusCode });
+          } else {
+            this.setState({ statusCode: "200" });
+          }
+          this.setState({ response: JSON.stringify(data, null, 4) });
+        })
       )
       .catch(err => this.setState({ response: JSON.stringify(err, null, 4) }));
   };
 
   render() {
     const response = this.state.response;
+    const statusCode = this.state.statusCode;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -82,18 +87,14 @@ class SendTaskSuccess extends Component {
         </form>
         {response.length > 0 && (
           <div
-            className="alert alert-primary alert-dismissible fade show response"
+            className={
+              statusCode === "200"
+                ? "alert alert-success response"
+                : "alert alert-danger response"
+            }
             role="alert"
           >
             <pre>{response}</pre>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
           </div>
         )}
       </div>
