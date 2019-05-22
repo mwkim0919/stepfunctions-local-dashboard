@@ -18,29 +18,54 @@ const APIs = [
   "createStateMachine",
   // "deleteActivity",
   // "deleteStateMachine",
-  // "describeActivity",
-  // "describeExecution",
-  // "describeStateMachine",
+  "describeActivity",
+  "describeExecution",
+  "describeStateMachine",
   "getActivityTask",
-  // "getExecutionHistory",
+  "getExecutionHistory",
   "listActivities",
   "listExecutions",
   "listStateMachines",
-  // "listTagsForResource",
+  "listTagsForResource",
   "sendTaskFailure",
   "sendTaskHeartbeat",
   "sendTaskSuccess",
-  "startExecution"
+  "startExecution",
   // "stopExecution",
-  // "tagResource",
-  // "untagResource",
-  // "updateState"
+  "tagResource",
+  "untagResource",
+  "updateState"
 ];
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <div class="sidenav">
+          {APIs.map(api => {
+            return (
+              <Link className="nav-link active" to={"/" + api}>
+                {api}
+              </Link>
+            );
+          })}
+        </div>
+
+        <div class="main">
+          <Route exact path="/createActivity" component={CreateActivity} />
+          <Route exact path="/createStateMachine" component={CreateStateMachine} />
+          <Route exact path="/getActivityTask" component={GetActivityTask} />
+          <Route exact path="/listActivities" component={ListActivities} />
+          <Route exact path="/listExecutions" component={ListExecutions} />
+          <Route exact path="/listStateMachines" component={ListStateMachines} />
+          <Route exact path="/startExecution" component={StartExecution} />
+          <Route exact path="/sendTaskSuccess" component={SendTaskSuccess} />
+          <Route exact path="/sendTaskFailure" component={SendTaskFailure} />
+          <Route exact path="/sendTaskHeartbeat" component={SendTaskHeartbeat} />
+        </div>
+      </Router>
+
+      {/* <Router>
         <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
           <button
             className="navbar-toggler"
@@ -57,10 +82,7 @@ function App() {
             <div className="navbar-nav">
               {APIs.map(api => {
                 return (
-                  <Link
-                    className="nav-link active"
-                    to={"/" + api}
-                  >
+                  <Link className="nav-link active" to={"/" + api}>
                     {api}
                   </Link>
                 );
@@ -79,7 +101,7 @@ function App() {
         <Route path="/sendTaskSuccess" component={SendTaskSuccess} />
         <Route path="/sendTaskFailure" component={SendTaskFailure} />
         <Route path="/sendTaskHeartbeat" component={SendTaskHeartbeat} />
-      </Router>
+      </Router> */}
     </div>
   );
 }
