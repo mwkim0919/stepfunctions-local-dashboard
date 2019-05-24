@@ -15,6 +15,14 @@ app.post("/api/create-state-machine", function(req, res) {
   StepFunctionsAPI.call(APIType.CREATE_STATE_MACHINE, req, res);
 });
 
+app.post("/api/describe-activity", function(req, res) {
+  StepFunctionsAPI.call(APIType.DESCRIBE_ACTIVITY, req, res);
+});
+
+app.post("/api/describe-execution", function(req, res) {
+  StepFunctionsAPI.call(APIType.DESCRIBE_EXECUTION, req, res);
+});
+
 app.post("/api/get-activity-task", function(req, res) {
   StepFunctionsAPI.call(APIType.GET_ACTIVITY_TASK, req, res);
 });

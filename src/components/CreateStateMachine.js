@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import StateMachineSnippet from "../StateMachineSnippet";
 
 class CreateStateMachine extends Component {
   constructor() {
@@ -29,6 +30,10 @@ class CreateStateMachine extends Component {
     } else if (event.target.name === "roleArn") {
       this.setState({
         roleArn: event.target.value
+      });
+    } else if (event.target.name === 'snippets') {
+      this.setState({
+        definition: event.target.value
       });
     }
   };
@@ -93,12 +98,32 @@ class CreateStateMachine extends Component {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="snippets">Snippets</label>
+            <select
+              className="form-control"
+              name="snippets"
+              id="snippets"
+              onChange={this.handleChange}
+            >
+              <option>Choose a snippet</option>
+              {Object.keys(StateMachineSnippet).map(key => {
+                return (
+                  <option
+                    value={JSON.stringify(StateMachineSnippet[key], null, 4)}
+                  >
+                    {key.replace(/_/g, " ")}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="form-group">
             <label htmlFor="definition">Definition</label>
             <textarea
               className="form-control"
               id="definition"
               name="definition"
-              rows="5"
+              rows="10"
               onChange={this.handleChange}
               value={this.state.definition}
             />
