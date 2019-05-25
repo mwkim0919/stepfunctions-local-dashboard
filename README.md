@@ -17,4 +17,5 @@
   * `yarn` 
   * `yarn build-run`
 * Run AWS Step Function Local Runner
+  * Make sure to use port 8083
 * Open a browser and go to http://localhost:3000
