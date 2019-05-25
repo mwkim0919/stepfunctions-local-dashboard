@@ -23,8 +23,16 @@ app.post("/api/describe-execution", function(req, res) {
   StepFunctionsAPI.call(APIType.DESCRIBE_EXECUTION, req, res);
 });
 
+app.post("/api/describe-state-machine", function(req, res) {
+  StepFunctionsAPI.call(APIType.DESCRIBE_STATE_MACHINE, req, res);
+});
+
 app.post("/api/get-activity-task", function(req, res) {
   StepFunctionsAPI.call(APIType.GET_ACTIVITY_TASK, req, res);
+});
+
+app.post("/api/get-execution-history", function(req, res) {
+  StepFunctionsAPI.call(APIType.GET_EXECUTION_HISTORY, req, res);
 });
 
 app.post("/api/list-activities", function(req, res) {

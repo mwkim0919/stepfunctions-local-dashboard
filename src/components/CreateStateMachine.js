@@ -32,9 +32,11 @@ class CreateStateMachine extends Component {
         roleArn: event.target.value
       });
     } else if (event.target.name === 'snippets') {
-      this.setState({
-        definition: event.target.value
-      });
+      if (event.target.value !== "") {
+        this.setState({
+          definition: event.target.value
+        });
+      }
     }
   };
 
@@ -75,7 +77,7 @@ class CreateStateMachine extends Component {
       <div>
         <div className="result">{this.state.result}</div>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="endpoint">Endpoint</label>
             <input
               type="text"
@@ -85,7 +87,7 @@ class CreateStateMachine extends Component {
               value={this.state.endpoint}
               onChange={this.handleChange}
             />
-          </div>
+          </div> */}
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
@@ -105,7 +107,7 @@ class CreateStateMachine extends Component {
               id="snippets"
               onChange={this.handleChange}
             >
-              <option>Choose a snippet</option>
+              <option value="">Choose a snippet</option>
               {Object.keys(StateMachineSnippet).map(key => {
                 return (
                   <option

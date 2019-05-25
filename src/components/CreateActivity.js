@@ -57,7 +57,7 @@ class CreateActivity extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="endpoint">Endpoint</label>
             <input
               type="text"
@@ -67,7 +67,7 @@ class CreateActivity extends Component {
               value={this.state.endpoint}
               onChange={this.handleChange}
             />
-          </div>
+          </div> */}
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input

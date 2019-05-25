@@ -5,7 +5,9 @@ import CreateActivity from "./components/CreateActivity";
 import CreateStateMachine from "./components/CreateStateMachine";
 import DescribeActivity from "./components/DescribeActivity";
 import DescribeExecution from "./components/DescribeExecution";
+import DescribeStateMachine from "./components/DescribeStateMachine";
 import GetActivityTask from "./components/GetActivityTask";
+import GetExecutionHistory from "./components/GetExecutionHistory";
 import ListActivities from "./components/ListActivities";
 import ListExecutions from "./components/ListExecutions";
 import ListStateMachines from "./components/ListStateMachines";
@@ -27,15 +29,15 @@ const APIs = [
   "listActivities",
   "listExecutions",
   "listStateMachines",
-  "listTagsForResource",
+  // "listTagsForResource",
   "sendTaskFailure",
   "sendTaskHeartbeat",
   "sendTaskSuccess",
-  "startExecution",
+  "startExecution"
   // "stopExecution",
-  "tagResource",
-  "untagResource",
-  "updateState"
+  // "tagResource",
+  // "untagResource",
+  // "updateState"
 ];
 
 function App() {
@@ -65,7 +67,13 @@ function App() {
             path="/describeExecution"
             component={DescribeExecution}
           />
+          <Route exact path="/describeStateMachine" component={DescribeStateMachine} />
           <Route exact path="/getActivityTask" component={GetActivityTask} />
+          <Route
+            exact
+            path="/getExecutionHistory"
+            component={GetExecutionHistory}
+          />
           <Route exact path="/listActivities" component={ListActivities} />
           <Route exact path="/listExecutions" component={ListExecutions} />
           <Route
