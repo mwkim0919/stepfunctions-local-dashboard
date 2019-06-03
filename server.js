@@ -47,6 +47,10 @@ app.post("/api/list-state-machines", function(req, res) {
   StepFunctionsAPI.call(APIType.LIST_STATE_MACHINES, req, res);
 });
 
+app.post("/api/list-tags-for-resource", function(req, res) {
+  StepFunctionsAPI.call(APIType.LIST_TAGS_FOR_RESOURCE, req, res);
+});
+
 app.post("/api/start-execution", function(req, res) {
   StepFunctionsAPI.call(APIType.START_EXECUTION, req, res);
 });

@@ -11,6 +11,7 @@ import GetExecutionHistory from "./components/GetExecutionHistory";
 import ListActivities from "./components/ListActivities";
 import ListExecutions from "./components/ListExecutions";
 import ListStateMachines from "./components/ListStateMachines";
+import ListTagsForResource from "./components/ListTagsForResource";
 import StartExecution from "./components/StartExecution";
 import SendTaskSuccess from "./components/SendTaskSuccess";
 import SendTaskFailure from "./components/SendTaskFailure";
@@ -29,7 +30,7 @@ const APIs = [
   "listActivities",
   "listExecutions",
   "listStateMachines",
-  // "listTagsForResource",
+  "listTagsForResource",
   "sendTaskFailure",
   "sendTaskHeartbeat",
   "sendTaskSuccess",
@@ -45,13 +46,18 @@ function App() {
     <div className="App">
       <Router>
         <div class="sidenav">
-          {APIs.map(api => {
-            return (
-              <Link className="nav-link active" to={"/" + api}>
-                {api}
-              </Link>
-            );
-          })}
+          <div class="list-group">
+            {APIs.map(api => {
+              return (
+                <Link
+                  className="list-group-item list-group-item-action"
+                  to={"/" + api}
+                >
+                  {api}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
         <div class="main">
@@ -67,7 +73,11 @@ function App() {
             path="/describeExecution"
             component={DescribeExecution}
           />
-          <Route exact path="/describeStateMachine" component={DescribeStateMachine} />
+          <Route
+            exact
+            path="/describeStateMachine"
+            component={DescribeStateMachine}
+          />
           <Route exact path="/getActivityTask" component={GetActivityTask} />
           <Route
             exact
@@ -80,6 +90,11 @@ function App() {
             exact
             path="/listStateMachines"
             component={ListStateMachines}
+          />
+          <Route
+            exact
+            path="/listTagsForResource"
+            component={ListTagsForResource}
           />
           <Route exact path="/startExecution" component={StartExecution} />
           <Route exact path="/sendTaskSuccess" component={SendTaskSuccess} />
