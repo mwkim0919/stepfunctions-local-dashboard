@@ -8,7 +8,9 @@ class CreateStateMachine extends Component {
       endpoint: "http://localhost:8083",
       name: "",
       definition: "",
-      roleArn: "arn:aws:iam::123456789012:role/asdf",
+      roleArn: "",
+      tagKeys: "",
+      tagValues: "",
       response: "",
       statusCode: ""
     };
@@ -31,12 +33,20 @@ class CreateStateMachine extends Component {
       this.setState({
         roleArn: event.target.value
       });
-    } else if (event.target.name === 'snippets') {
+    } else if (event.target.name === "snippets") {
       if (event.target.value !== "") {
         this.setState({
           definition: event.target.value
         });
       }
+    } else if (event.target.name === "tagKeys") {
+      this.setState({
+        tagKeys: event.target.value
+      });
+    } else if (event.target.name === "tagValues") {
+      this.setState({
+        tagValues: event.target.value
+      });
     }
   };
 
@@ -46,7 +56,8 @@ class CreateStateMachine extends Component {
       param: {
         name: this.state.name,
         definition: this.state.definition,
-        roleArn: this.state.roleArn
+        roleArn: this.state.roleArn,
+        tags: this.processTags(this.state.tagKeys, this.state.tagValues)
       },
       endpoint: this.state.endpoint
     };
@@ -69,6 +80,20 @@ class CreateStateMachine extends Component {
       )
       .catch(err => this.setState({ response: JSON.stringify(err, null, 4) }));
   };
+
+  processTags(keys, values) {
+    const tags = [];
+    const keyArray = keys.split(",");
+    const valueArray = values.split(",");
+    keyArray.forEach((key, index) => {
+      const tag = {
+        key: key.trim(),
+        value: valueArray[index].trim()
+      };
+      tags.push(tag);
+    });
+    return tags;
+  }
 
   render() {
     const response = this.state.response;
@@ -139,6 +164,31 @@ class CreateStateMachine extends Component {
               name="roleArn"
               value={this.state.roleArn}
               onChange={this.handleChange}
+              placeholder="arn:aws:iam::123456789012:role/asdf"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="tagKeys">Tag Keys</label>
+            <textarea
+              className="form-control"
+              id="tagKeys"
+              name="tagKeys"
+              rows="5"
+              onChange={this.handleChange}
+              value={this.state.tagKeys}
+              placeholder="Put tag keys separated by comma. e.g. tag1,tag2"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="tagValues">Tag Values</label>
+            <textarea
+              className="form-control"
+              id="tagValues"
+              name="tagValues"
+              rows="5"
+              onChange={this.handleChange}
+              value={this.state.tagValues}
+              placeholder="Put tag values separated by comma in the order of associated tag keys. e.g. value1,value2"
             />
           </div>
           <button type="submit" className="btn btn-primary btn-lg btn-block">
