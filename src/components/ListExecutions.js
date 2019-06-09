@@ -55,17 +55,7 @@ class ListExecutions extends Component {
       endpoint: this.state.endpoint
     };
 
-    fetch("/api/list-executions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res =>
-        res.json().then(data => this.setState({ executions: data.executions }))
-      )
-      .catch(err => console.log(err));
+    this.callListExecutions(data);
   };
 
   getStatusClassName = status => {
@@ -77,6 +67,51 @@ class ListExecutions extends Component {
       return "table-danger";
     }
   };
+
+  stopExecution = event => {
+    event.preventDefault();
+    const executionArn = event.target.id;
+    const data = {
+      param: {
+        executionArn: executionArn
+      },
+      endpoint: this.state.endpoint
+    };
+
+    fetch("/api/stop-execution", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => {
+        if (res.status === 200) {
+          const data = {
+            param: {
+              stateMachineArn: this.state.stateMachineArn
+            },
+            endpoint: this.state.endpoint
+          };
+          this.callListExecutions(data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  callListExecutions(data) {
+    fetch("/api/list-executions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res =>
+        res.json().then(data => this.setState({ executions: data.executions }))
+      )
+      .catch(err => console.log(err));
+  }
 
   render() {
     const executions = this.state.executions;
@@ -113,7 +148,10 @@ class ListExecutions extends Component {
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Execution ARN</th>
+              {/* <th scope="col">Start Date</th> */}
+              {/* <th scope="col">Stop Date</th> */}
               <th scope="col">Status</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -123,6 +161,19 @@ class ListExecutions extends Component {
                   <td>{execution.name}</td>
                   <td>{execution.executionArn}</td>
                   <td>{execution.status}</td>
+                  {/* <td>{execution.startDate}</td> */}
+                  {/* <td>{execution.stopDate}</td> */}
+                  <td>
+                    {execution.status === "RUNNING" && (
+                      <button
+                        id={execution.executionArn}
+                        className="btn btn-danger"
+                        onClick={this.stopExecution}
+                      >
+                        Stop
+                      </button>
+                    )}
+                  </td>
                 </tr>
               );
             })}
