@@ -20,8 +20,6 @@ import SendTaskHeartbeat from "./components/SendTaskHeartbeat";
 const APIs = [
   "createActivity",
   "createStateMachine",
-  // "deleteActivity",
-  // "deleteStateMachine",
   "describeActivity",
   "describeExecution",
   "describeStateMachine",
@@ -35,7 +33,6 @@ const APIs = [
   "sendTaskHeartbeat",
   "sendTaskSuccess",
   "startExecution"
-  // "stopExecution",
   // "tagResource",
   // "untagResource",
   // "updateState"

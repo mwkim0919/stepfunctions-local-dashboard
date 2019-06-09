@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 const StepFunctionsAPI = require("./backend/StepFunctionsAPI");
 const APIType = require("./util/APIType");
 const app = express();
@@ -13,6 +13,14 @@ app.post("/api/create-activity", function(req, res) {
 
 app.post("/api/create-state-machine", function(req, res) {
   StepFunctionsAPI.call(APIType.CREATE_STATE_MACHINE, req, res);
+});
+
+app.post("/api/delete-activity", function(req, res) {
+  StepFunctionsAPI.call(APIType.DELETE_ACTIVITY, req, res);
+});
+
+app.post("/api/delete-state-machine", function(req, res) {
+  StepFunctionsAPI.call(APIType.DELETE_STATE_MACHINE, req, res);
 });
 
 app.post("/api/describe-activity", function(req, res) {
@@ -51,10 +59,6 @@ app.post("/api/list-tags-for-resource", function(req, res) {
   StepFunctionsAPI.call(APIType.LIST_TAGS_FOR_RESOURCE, req, res);
 });
 
-app.post("/api/start-execution", function(req, res) {
-  StepFunctionsAPI.call(APIType.START_EXECUTION, req, res);
-});
-
 app.post("/api/send-task-success", function(req, res) {
   StepFunctionsAPI.call(APIType.SEND_TASK_SUCCESS, req, res);
 });
@@ -65,6 +69,14 @@ app.post("/api/send-task-failure", function(req, res) {
 
 app.post("/api/send-task-heartbeat", function(req, res) {
   StepFunctionsAPI.call(APIType.SEND_TASK_HEARTBEAT, req, res);
+});
+
+app.post("/api/start-execution", function(req, res) {
+  StepFunctionsAPI.call(APIType.START_EXECUTION, req, res);
+});
+
+app.post("/api/stop-execution", function(req, res) {
+  StepFunctionsAPI.call(APIType.STOP_EXECUTION, req, res);
 });
 
 app.use(express.static("build"));
