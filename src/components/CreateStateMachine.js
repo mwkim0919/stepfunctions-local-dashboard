@@ -83,8 +83,8 @@ class CreateStateMachine extends Component {
 
   processTags(keys, values) {
     const tags = [];
-    const keyArray = keys.split(",");
-    const valueArray = values.split(",");
+    const keyArray = keys.split(",").filter(key => key.length !== 0);
+    const valueArray = values.split(",").filter(key => key.length !== 0);
     keyArray.forEach((key, index) => {
       const tag = {
         key: key.trim(),
