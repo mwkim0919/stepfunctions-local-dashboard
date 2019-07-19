@@ -56,7 +56,10 @@ class CreateStateMachine extends Component {
       param: {
         name: this.state.name,
         definition: this.state.definition,
-        roleArn: this.state.roleArn,
+        roleArn:
+          this.state.roleArn === ""
+            ? "arn:aws:iam::123456789012:role/test"
+            : this.state.roleArn,
         tags: this.processTags(this.state.tagKeys, this.state.tagValues)
       },
       endpoint: this.state.endpoint
@@ -164,7 +167,7 @@ class CreateStateMachine extends Component {
               name="roleArn"
               value={this.state.roleArn}
               onChange={this.handleChange}
-              placeholder="arn:aws:iam::123456789012:role/asdf"
+              placeholder="Put Role ARN (e.g. arn:aws:iam::123456789012:role/asdf) If not provided, then a dummpy role ARN will be used."
             />
           </div>
           <div className="form-group">
