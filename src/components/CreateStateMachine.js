@@ -259,7 +259,7 @@ class CreateStateMachine extends Component {
               name="logGroupArn"
               value={this.state.logGroupArn}
               onChange={this.handleChange}
-              placeholder="arn:aws:logs:us-west-2:612924582212:log-group:/aws/states/express-test-2-Logs"
+              placeholder="arn:aws:logs:us-east-1:123456789012:log-group:/aws/states/log-group-name"
             />
           </div>
           <div className="form-group">

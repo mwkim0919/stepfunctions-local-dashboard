@@ -65,7 +65,7 @@ const SNIPPETS = {
             "convert-to-letter-grade": {
               Type: "Task",
               Resource:
-                "arn:aws:lambda:us-east-1:612924582212:function:numeric-to-letter",
+                "arn:aws:lambda:us-east-1:123456789012:function:lambda-function-name",
               End: true
             }
           }
