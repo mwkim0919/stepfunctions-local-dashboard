@@ -10,6 +10,71 @@ const SNIPPETS = {
     }
   },
 
+  Map: {
+    StartAt: "Test",
+    States: {
+      Test: {
+        Type: "Map",
+        Comment: "my comment",
+        InputPath: "$.course",
+        OutputPath: "$.course",
+        ResultPath: "$.course",
+        ItemsPath: "$.grades",
+        Parameters: {
+          "index.$": "$$.Map.Item.Index",
+          "grade.$": "$$.Map.Item.Value",
+          "courseName.$": "$.name"
+        },
+        MaxConcurrency: 0,
+        Iterator: {
+          StartAt: "Mark-as-Complete",
+          States: {
+            "Mark-as-Complete": {
+              Type: "Pass",
+              Result: {
+                Completed: true
+              },
+              ResultPath: "$.status",
+              End: true
+            }
+          }
+        },
+        End: true
+      }
+    }
+  },
+
+  Map_Lambda: {
+    StartAt: "Test",
+    States: {
+      Test: {
+        Type: "Map",
+        Comment: "my comment",
+        InputPath: "$",
+        OutputPath: "$",
+        ResultPath: "$",
+        ItemsPath: "$",
+        Parameters: {
+          "index.$": "$$.Map.Item.Index",
+          "percentage.$": "$$.Map.Item.Value"
+        },
+        MaxConcurrency: 0,
+        Iterator: {
+          StartAt: "convert-to-letter-grade",
+          States: {
+            "convert-to-letter-grade": {
+              Type: "Task",
+              Resource:
+                "arn:aws:lambda:us-east-1:612924582212:function:numeric-to-letter",
+              End: true
+            }
+          }
+        },
+        End: true
+      }
+    }
+  },
+
   SNS_Publish_Message: {
     StartAt: "Send message to SNS",
     States: {

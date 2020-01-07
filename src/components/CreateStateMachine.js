@@ -8,7 +8,11 @@ class CreateStateMachine extends Component {
       endpoint: "http://localhost:8083",
       name: "",
       definition: "",
+      type: "STANDARD",
       roleArn: "",
+      includeExecutionData: true,
+      logGroupArn: "",
+      logLevel: "ALL",
       tagKeys: "",
       tagValues: "",
       response: "",
@@ -29,9 +33,25 @@ class CreateStateMachine extends Component {
       this.setState({
         definition: event.target.value
       });
+    } else if (event.target.name === "type") {
+      this.setState({
+        type: event.target.value
+      });
     } else if (event.target.name === "roleArn") {
       this.setState({
         roleArn: event.target.value
+      });
+    } else if (event.target.name === "includeExecutionData") {
+      this.setState({
+        includeExecutionData: event.target.value === "true" ? true : false
+      });
+    } else if (event.target.name === "logGroupArn") {
+      this.setState({
+        logGroupArn: event.target.value
+      });
+    } else if (event.target.name === "logLevel") {
+      this.setState({
+        logLevel: event.target.value
       });
     } else if (event.target.name === "snippets") {
       if (event.target.value !== "") {
@@ -56,14 +76,21 @@ class CreateStateMachine extends Component {
       param: {
         name: this.state.name,
         definition: this.state.definition,
+        type: this.state.type,
         roleArn:
           this.state.roleArn === ""
             ? "arn:aws:iam::123456789012:role/test"
             : this.state.roleArn,
-        tags: this.processTags(this.state.tagKeys, this.state.tagValues)
+        tags: this.processTags(this.state.tagKeys, this.state.tagValues),
+        loggingConfiguration: this.buildLogConfiguration(
+          this.state.logLevel,
+          this.state.logGroupArn,
+          this.state.includeExecutionData
+        )
       },
       endpoint: this.state.endpoint
     };
+    console.log(JSON.stringify(data));
     fetch("/api/create-state-machine", {
       method: "POST",
       headers: {
@@ -96,6 +123,21 @@ class CreateStateMachine extends Component {
       tags.push(tag);
     });
     return tags;
+  }
+
+  buildLogConfiguration(logLevel, logGroupArn, includeExecutionData) {
+    const logConfiguration = {
+      destinations: [
+        {
+          cloudWatchLogsLogGroup: {
+            logGroupArn: `${logGroupArn}:*`
+          }
+        }
+      ],
+      includeExecutionData: includeExecutionData,
+      level: logLevel
+    };
+    return logConfiguration;
   }
 
   render() {
@@ -159,6 +201,18 @@ class CreateStateMachine extends Component {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="type">Type</label>
+            <select
+              className="form-control"
+              name="type"
+              id="type"
+              onChange={this.handleChange}
+            >
+              <option value="STANDARD">Standard</option>
+              <option value="EXPRESS">Express</option>
+            </select>
+          </div>
+          <div className="form-group">
             <label htmlFor="roleArn">Role Arn</label>
             <input
               type="text"
@@ -168,6 +222,44 @@ class CreateStateMachine extends Component {
               value={this.state.roleArn}
               onChange={this.handleChange}
               placeholder="Put Role ARN (e.g. arn:aws:iam::123456789012:role/asdf) If not provided, then a dummpy role ARN will be used."
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="logLevel">Log Level</label>
+            <select
+              className="form-control"
+              name="logLevel"
+              id="logLevel"
+              onChange={this.handleChange}
+            >
+              <option value="ALL">ALL</option>
+              <option value="FATAL">FATAL</option>
+              <option value="ERROR">ERROR</option>
+              <option value="OFF">OFF</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="includeExecutionData">includeExecutionData</label>
+            <select
+              className="form-control"
+              name="includeExecutionData"
+              id="includeExecutionData"
+              onChange={this.handleChange}
+            >
+              <option value="true">On</option>
+              <option value="false">Off</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="roleArn">logGroupArn</label>
+            <input
+              type="text"
+              className="form-control"
+              id="logGroupArn"
+              name="logGroupArn"
+              value={this.state.logGroupArn}
+              onChange={this.handleChange}
+              placeholder="arn:aws:logs:us-west-2:612924582212:log-group:/aws/states/express-test-2-Logs"
             />
           </div>
           <div className="form-group">
