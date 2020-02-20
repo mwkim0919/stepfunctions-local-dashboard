@@ -92,6 +92,13 @@ class StartExecution extends Component {
       .catch(err => this.setState({ response: JSON.stringify(err, null, 4) }));
   };
 
+  reindent = event => {
+    event.preventDefault();
+    const input = this.state.input;
+    const formattedInput = JSON.stringify(JSON.parse(input), null, 2);
+    this.setState({ input: formattedInput });
+  };
+
   render() {
     const stateMachines = this.state.stateMachines;
     const response = this.state.response;
@@ -131,6 +138,12 @@ class StartExecution extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="input">Input</label>
+            <button
+              className="btn btn-primary btn-lg btn-block"
+              onClick={this.reindent}
+            >
+              Reindent
+            </button>
             <textarea
               className="form-control"
               id="input"

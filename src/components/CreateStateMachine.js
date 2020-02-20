@@ -82,15 +82,17 @@ class CreateStateMachine extends Component {
             ? "arn:aws:iam::123456789012:role/test"
             : this.state.roleArn,
         tags: this.processTags(this.state.tagKeys, this.state.tagValues),
-        loggingConfiguration: this.buildLogConfiguration(
-          this.state.logLevel,
-          this.state.logGroupArn,
-          this.state.includeExecutionData
-        )
+        loggingConfiguration:
+          this.state.logLevel !== "OFF"
+            ? this.buildLogConfiguration(
+                this.state.logLevel,
+                this.state.logGroupArn,
+                this.state.includeExecutionData
+              )
+            : null
       },
       endpoint: this.state.endpoint
     };
-    console.log(JSON.stringify(data));
     fetch("/api/create-state-machine", {
       method: "POST",
       headers: {
@@ -139,6 +141,13 @@ class CreateStateMachine extends Component {
     };
     return logConfiguration;
   }
+
+  reindent = event => {
+    event.preventDefault();
+    const definition = this.state.definition;
+    const formattedDefinition = JSON.stringify(JSON.parse(definition), null, 2);
+    this.setState({ definition: formattedDefinition });
+  };
 
   render() {
     const response = this.state.response;
@@ -191,6 +200,12 @@ class CreateStateMachine extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="definition">Definition</label>
+            <button
+              className="btn btn-primary btn-lg btn-block"
+              onClick={this.reindent}
+            >
+              Reindent
+            </button>
             <textarea
               className="form-control"
               id="definition"
