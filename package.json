@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "aws-sdk": "latest",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
